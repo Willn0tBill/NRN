@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090d12">
+<title>NRN — New Republic Network</title>
+<meta name="description" content="New Republic Network — games, awards, news, and community coverage across Softbear and OpenFront.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#090d12;
+  --bg-2:#0d131a;
+  --panel:#111922;
+  --panel-2:#151f2a;
+  --panel-3:#1a2632;
+  --text:#f0ecdd;
+  --muted:#99a5af;
+  --faint:#5e6a74;
+  --line:#26323e;
+  --line-soft:rgba(255,255,255,.07);
+  --gold:#d6a74b;
+  --gold-2:#f0c56b;
+  --teal:#52b8a9;
+  --red:#d65a52;
+  --blue:#729ed8;
+  --radius:18px;
+  --radius-sm:11px;
+  --shadow:0 28px 70px rgba(0,0,0,.34);
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 12% 3%,rgba(214,167,75,.10),transparent 26rem),
+    radial-gradient(circle at 88% 22%,rgba(82,184,169,.07),transparent 30rem),
+    var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:1000;
+  opacity:.11;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode:soft-light;
+}
+::selection{background:var(--gold);color:#0b0e11}
+a{color:inherit;text-decoration:none}
+button,a{ -webkit-tap-highlight-color:transparent }
+img{max-width:100%;display:block}
+
+/* ---------- LOAD SCREEN ---------- */
+.loader{
+  position:fixed; inset:0; z-index:9999; display:grid; place-items:center;
+  background:#080c10; transition:opacity .7s ease,visibility .7s ease;
+}
+.loader.done{opacity:0;visibility:hidden}
+.loader-mark{font-family:'Big Shoulders Display';font-size:clamp(54px,10vw,105px);font-weight:800;letter-spacing:-2px}
+.loader-mark span{color:var(--gold)}
+.loader-line{height:2px;width:190px;background:#232d36;margin:18px auto 0;overflow:hidden}
+.loader-line::after{content:"";display:block;height:100%;width:45%;background:var(--gold);animation:load 1.15s cubic-bezier(.7,0,.2,1) infinite}
+@keyframes load{from{transform:translateX(-120%)}to{transform:translateX(250%)}}
+
+/* ---------- GLOBAL ---------- */
+.wrap{width:min(calc(100% - 44px),var(--max));margin-inline:auto}
+.section{padding:112px 0;position:relative;scroll-margin-top:100px}
+.section-tight{padding:82px 0}
+.kicker{
+  display:flex;align-items:center;gap:10px;
+  margin:0 0 13px;color:var(--gold);font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase
+}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+h1,h2,h3,.display{font-family:'Big Shoulders Display',sans-serif;margin:0;line-height:.98}
+h1{font-size:clamp(58px,8.7vw,126px);font-weight:800;letter-spacing:-.032em}
+h2{font-size:clamp(42px,5.5vw,72px);font-weight:750;letter-spacing:-.018em}
+h3{font-size:27px;font-weight:700}
+p{margin:0}
+.lede{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:710px;line-height:1.7}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .75s cubic-bezier(.2,.8,.2,1),transform .75s cubic-bezier(.2,.8,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}.reveal-delay-2{transition-delay:.16s}.reveal-delay-3{transition-delay:.24s}
+
+/* ---------- NAV ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  border-bottom:1px solid transparent;
+  transition:background .3s ease,border-color .3s ease,backdrop-filter .3s ease;
+}
+.topbar.scrolled{background:rgba(9,13,18,.82);border-color:var(--line-soft);backdrop-filter:blur(18px)}
+.nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:13px;white-space:nowrap}
+.brand-mark{font-family:'Big Shoulders Display';font-size:31px;font-weight:800;letter-spacing:.03em}
+.brand-mark span{color:var(--gold)}
+.brand-copy{font-size:11px;color:var(--muted);line-height:1.25;padding-left:12px;border-left:1px solid var(--line)}
+.navlinks{display:flex;align-items:center;gap:4px}
+.navlinks a{font-family:'Big Shoulders Display';font-size:16px;font-weight:600;color:var(--muted);padding:10px 12px;border-radius:8px;transition:.2s ease}
+.navlinks a:hover,.navlinks a.active{color:var(--text);background:rgba(255,255,255,.045)}
+.menu-btn{display:none;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 11px;font:600 14px 'IBM Plex Sans'}
+
+/* ---------- BUTTONS ---------- */
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:11px;
+  min-height:47px;padding:0 20px;border-radius:10px;border:1px solid var(--line);
+  background:var(--panel);font-family:'Big Shoulders Display';font-size:17px;font-weight:700;
+  letter-spacing:.015em;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+  position:relative;overflow:hidden
+}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.12),transparent 75%);transform:translateX(-120%);transition:transform .65s ease}
+.btn:hover::before{transform:translateX(120%)}
+.btn:hover{transform:translateY(-2px);border-color:#465463;box-shadow:0 14px 34px rgba(0,0,0,.22)}
+.btn.primary{background:var(--gold);color:#11100c;border-color:var(--gold)}
+.btn.ghost{background:transparent}
+.btn .arrow{transition:transform .2s ease}.btn:hover .arrow{transform:translateX(4px)}
+
+/* ---------- HERO ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:135px 0 84px;position:relative}
+.hero-grid{position:absolute;inset:0;pointer-events:none;opacity:.42;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:62px 62px;mask-image:linear-gradient(to bottom,black,transparent 82%)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(0);pointer-events:none;animation:orbFloat 9s ease-in-out infinite}
+.hero-orb.one{width:410px;height:410px;right:-150px;top:18%;background:radial-gradient(circle,rgba(214,167,75,.11),rgba(214,167,75,0) 70%)}
+.hero-orb.two{width:350px;height:350px;left:-160px;bottom:0;background:radial-gradient(circle,rgba(82,184,169,.08),rgba(82,184,169,0) 70%);animation-delay:-4s}
+@keyframes orbFloat{50%{transform:translate3d(0,-24px,0) scale(1.04)}}
+.hero-inner{position:relative;z-index:2}
+.hero h1{max-width:1050px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:block;transform:translateY(115%);animation:heroUp .9s cubic-bezier(.16,1,.3,1) forwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.10s}
+.hero h1 .line:nth-child(3) span{animation-delay:.20s}
+@keyframes heroUp{to{transform:none}}
+.hero-copy{margin-top:27px;max-width:690px;color:var(--muted);font-size:19px;opacity:0;transform:translateY(16px);animation:softIn .8s .45s forwards}
+.hero .actions{opacity:0;transform:translateY(16px);animation:softIn .8s .58s forwards}
+@keyframes softIn{to{opacity:1;transform:none}}
+.hero-meta{display:flex;gap:25px;flex-wrap:wrap;margin-top:58px;color:var(--faint);font-family:'IBM Plex Mono';font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.hero-meta span{display:flex;align-items:center;gap:8px}.hero-meta i{width:6px;height:6px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 5px rgba(214,167,75,.08)}
+.scroll-cue{position:absolute;bottom:32px;right:0;font-family:'IBM Plex Mono';font-size:10px;color:var(--faint);letter-spacing:.13em;text-transform:uppercase;writing-mode:vertical-rl;display:flex;align-items:center;gap:10px}
+.scroll-cue::after{content:"";width:1px;height:52px;background:linear-gradient(var(--gold),transparent)}
+
+/* ---------- INTRO / STRUCTURE ---------- */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:start}
+.section-copy{padding-top:8px}
+.structure-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:45px}
+.structure-card,.info-card,.game-card,.staff-card,.empty-news,.award-link{
+  border:1px solid var(--line);background:linear-gradient(155deg,rgba(255,255,255,.025),transparent 55%),var(--panel);
+  border-radius:var(--radius);box-shadow:0 1px 0 rgba(255,255,255,.02) inset;
+}
+.structure-card{padding:25px;min-height:180px;transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.structure-card:hover{transform:translateY(-5px);border-color:#3c4a57;background-color:var(--panel-2)}
+.structure-card .code{font:500 11px 'IBM Plex Mono';color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
+.structure-card h3{margin-top:22px}.structure-card p{margin-top:10px;color:var(--muted);font-size:14px}
+
+/* ---------- GAMES ---------- */
+.games-head{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:38px}
+.catalog-label{font:500 11px 'IBM Plex Mono';text-transform:uppercase;color:var(--faint);letter-spacing:.1em}
+.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.game-card{padding:24px;min-height:226px;position:relative;overflow:hidden;transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease;background-color .28s ease}
+.game-card::after{content:"";position:absolute;inset:auto -40px -90px auto;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(214,167,75,.09),transparent 67%);transition:transform .4s ease}
+.game-card:hover{transform:translateY(-6px);border-color:#455361;background-color:var(--panel-2)}
+.game-card:hover::after{transform:scale(1.4)}
+.game-card.openfront{grid-column:span 2;border-color:rgba(214,90,82,.35);background:linear-gradient(135deg,rgba(214,90,82,.07),transparent 55%),var(--panel)}
+.game-card .game-top{display:flex;justify-content:space-between;gap:12px;align-items:start;position:relative;z-index:2}
+.game-card .genre{font:500 10px 'IBM Plex Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.game-card.openfront .genre{color:#ef928c}
+.game-card h3{font-size:31px;margin-top:8px;position:relative;z-index:2}
+.game-card p{color:var(--muted);font-size:13.5px;margin-top:12px;max-width:420px;position:relative;z-index:2}
+.game-link{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;color:var(--muted);transition:.2s ease}
+.game-card:hover .game-link{color:var(--text);border-color:var(--gold);transform:rotate(-4deg)}
+.game-foot{position:absolute;bottom:20px;left:24px;right:24px;display:flex;justify-content:space-between;color:var(--faint);font:500 10px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.06em;z-index:2}
+
+/* ---------- AWARDS ---------- */
+.awards{background:linear-gradient(180deg,transparent,rgba(214,167,75,.035),transparent)}
+.cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:40px}
+.phase{background:var(--panel);padding:28px}.phase-num{font:500 11px 'IBM Plex Mono';color:var(--gold);text-transform:uppercase;letter-spacing:.09em}.phase h3{margin-top:13px}.phase p{color:var(--muted);font-size:14px;margin-top:9px}
+.award-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.award-link{padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:center;transition:.25s ease}
+.award-link:hover{transform:translateY(-4px);border-color:var(--gold);background-color:var(--panel-2)}
+.award-link small{font:500 10px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.08em;color:var(--gold)}
+.award-link strong{display:block;font-family:'Big Shoulders Display';font-size:24px;margin-top:4px}
+.award-link .go{font-size:21px;color:var(--muted)}
+.calendar{margin-top:35px;padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+.months{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-top:20px}
+.month{padding:11px 4px;text-align:center;border:1px solid var(--line);border-radius:7px;color:var(--muted);font:500 10px 'IBM Plex Mono';position:relative;overflow:hidden}
+.month::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--blue)}
+.month.run::before{background:var(--teal)}.month.vote::before{background:var(--gold)}.month.yearly::before{background:var(--red)}
+.month.yearly{background:rgba(214,90,82,.045)}
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}.info-card{padding:24px}.info-card p{color:var(--muted);font-size:14px;margin-top:9px}
+
+/* ---------- NRNN ---------- */
+.newsroom-shell{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:38px}
+.empty-news{padding:38px;min-height:310px;display:flex;flex-direction:column;justify-content:space-between}
+.empty-icon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font-family:'IBM Plex Mono';color:var(--gold)}
+.empty-news h3{font-size:36px;margin-top:36px}.empty-news p{color:var(--muted);margin-top:10px;max-width:500px}
+.news-guideline{padding:30px;border:1px dashed #364553;border-radius:var(--radius);color:var(--muted);background:rgba(255,255,255,.012)}
+.news-guideline h3{color:var(--text);font-size:29px}.news-guideline ol{padding-left:18px;margin:18px 0 0}.news-guideline li{margin:8px 0;font-size:14px}
+.article-grid:empty{display:none}
+
+/* ---------- STAFF ---------- */
+.staff-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:38px;margin-top:40px;align-items:stretch}
+.staff-card{padding:35px;position:relative;overflow:hidden;min-height:325px}
+.staff-card::after{content:"NRN";position:absolute;right:-10px;bottom:-42px;font-family:'Big Shoulders Display';font-size:180px;font-weight:800;line-height:1;color:rgba(255,255,255,.025);pointer-events:none}
+.staff-avatar{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;background:var(--gold);color:#12100b;font-family:'Big Shoulders Display';font-weight:800;font-size:30px;box-shadow:0 0 0 8px rgba(214,167,75,.07)}
+.staff-card h3{font-size:42px;margin-top:28px}.staff-role{font:500 11px 'IBM Plex Mono';color:var(--gold);text-transform:uppercase;letter-spacing:.09em;margin-top:7px}
+.staff-card p{color:var(--muted);margin-top:18px;max-width:520px}
+.staff-intro{display:flex;flex-direction:column;justify-content:center;padding:28px 18px}.staff-intro p{color:var(--muted);font-size:18px;max-width:600px}.staff-intro .note{font:500 11px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-top:22px}
+
+/* ---------- FUTURE ---------- */
+.future-box{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:55px 0;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}.future-box h3{font-size:43px}.future-box p{color:var(--muted);max-width:650px;margin-top:10px}
+
+/* ---------- FOOTER ---------- */
+footer{padding:42px 0 55px}.footer-row{display:flex;justify-content:space-between;gap:20px;align-items:end;color:var(--faint);font-size:12px}.footer-mark{font-family:'Big Shoulders Display';font-size:27px;font-weight:800;color:var(--text)}.footer-mark span{color:var(--gold)}
+.backtop{font:500 10px 'IBM Plex Mono';text-transform:uppercase;letter-spacing:.09em;border-bottom:1px solid var(--line);padding-bottom:3px}
+
+/* ---------- CURSOR SPOTLIGHT ---------- */
+.spotlight{position:fixed;left:0;top:0;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(214,167,75,.055),transparent 66%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s ease}
+body:hover .spotlight{opacity:1}
+
+@media(max-width:980px){
+  .navlinks{position:fixed;top:72px;left:22px;right:22px;padding:12px;background:rgba(13,19,26,.96);border:1px solid var(--line);border-radius:14px;display:none;flex-direction:column;align-items:stretch;box-shadow:var(--shadow)}
+  .navlinks.open{display:flex}.navlinks a{padding:11px 13px}.menu-btn{display:block}
+  .split,.staff-layout,.newsroom-shell{grid-template-columns:1fr}.structure-grid,.game-grid{grid-template-columns:repeat(2,1fr)}
+  .game-card.openfront{grid-column:span 2}.award-actions,.categories{grid-template-columns:1fr}.months{grid-template-columns:repeat(6,1fr)}
+}
+@media(max-width:680px){
+  .wrap{width:min(calc(100% - 30px),var(--max))}.section{padding:82px 0}.hero{padding-top:120px}.brand-copy{display:none}
+  .structure-grid,.game-grid,.cycle{grid-template-columns:1fr}.game-card.openfront{grid-column:auto}.cycle{background:transparent;gap:10px;border:0}.phase{border:1px solid var(--line);border-radius:13px}
+  .games-head{display:block}.catalog-label{margin-top:16px}.months{grid-template-columns:repeat(4,1fr)}.future-box{grid-template-columns:1fr}.footer-row{align-items:start;flex-direction:column}.scroll-cue{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="loader" id="loader" aria-hidden="true"><div><div class="loader-mark">NR<span>N</span></div><div class="loader-line"></div></div></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+<header class="topbar" id="topbar">
+  <div class="wrap nav">
+    <a href="#home" class="brand" aria-label="NRN home">
+      <div class="brand-mark">NR<span>N</span></div>
+      <div class="brand-copy">NEW REPUBLIC NETWORK<br><span>formerly SGN</span></div>
+    </a>
+    <nav class="navlinks" id="navlinks" aria-label="Primary navigation">
+      <a href="#about">About</a><a href="#games">Games</a><a href="#awards">NRNA</a><a href="#news">NRNN</a><a href="#staff">Staff</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-grid"></div><div class="hero-orb one"></div><div class="hero-orb two"></div>
+  <div class="wrap hero-inner">
+    <div class="kicker">New Republic Network</div>
+    <h1>
+      <span class="line"><span>MORE THAN</span></span>
+      <span class="line"><span>A GAME</span></span>
+      <span class="line"><span class="gold">NETWORK.</span></span>
+    </h1>
+    <p class="hero-copy">NRN connects games, community awards, and independent network coverage across Softbear titles and OpenFront — expanding the former Softbear Games Network into something built for more.</p>
+    <div class="actions">
+      <a class="btn primary" href="#games">Explore the network <span class="arrow">→</span></a>
+      <a class="btn ghost" href="#awards">NRNA awards <span class="arrow">↘</span></a>
+    </div>
+    <div class="hero-meta"><span><i></i> Formerly SGN</span><span><i></i> Softbear + OpenFront</span><span><i></i> Awards + News + Community</span></div>
+  </div>
+  <div class="wrap"><div class="scroll-cue">Scroll to explore</div></div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal"><div class="kicker">01 — The Network</div><h2>Built to grow beyond SGN.</h2></div>
+      <div class="section-copy reveal reveal-delay-1">
+        <p class="lede">Softbear Games Network became <strong class="gold">New Republic Network</strong> so the project could expand beyond a single studio. NRN now serves as the umbrella for game coverage, community awards, and news across multiple gaming communities.</p>
+        <p class="muted" style="margin-top:18px;max-width:700px;">The name also aligns the network with the broader New Republic identity while keeping the original SGN mission recognizable.</p>
+      </div>
+    </div>
+    <div class="structure-grid">
+      <article class="structure-card reveal"><div class="code">NRN / Network</div><h3>Games</h3><p>A central directory for every game currently represented by the network.</p></article>
+      <article class="structure-card reveal reveal-delay-1"><div class="code">NRNA / Awards</div><h3>Recognition</h3><p>Quarterly and yearly community awards with nominations and public voting.</p></article>
+      <article class="structure-card reveal reveal-delay-2"><div class="code">NRNN / News</div><h3>Coverage</h3><p>A newsroom for future articles covering events, updates, communities, and competition.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="games">
+  <div class="wrap">
+    <div class="games-head reveal">
+      <div><div class="kicker">02 — Network Games</div><h2>Play across the network.</h2></div>
+      <div class="catalog-label">10 Softbear titles + OpenFront</div>
+    </div>
+    <div class="game-grid">
+      <a class="game-card reveal" href="https://kiomet.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Real-time strategy</div><h3>Kiomet</h3></div><span class="game-link">↗</span></div><p>Command forces, build supply lines, and expand through a competitive multiplayer map.</p><div class="game-foot"><span>Softbear</span><span>kiomet.com</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://krakax.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Archery / Physics</div><h3>Krakax</h3></div><span class="game-link">↗</span></div><p>A surreal multiplayer archery game built around unusual gravity and physics.</p><div class="game-foot"><span>Softbear</span><span>krakax.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://mazean.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">3D FPS</div><h3>Mazean</h3></div><span class="game-link">↗</span></div><p>Fight with lasers and force fields in a fast multiplayer first-person arena.</p><div class="game-foot"><span>Softbear</span><span>mazean.com</span></div></a>
+      <a class="game-card reveal" href="https://mk48.io" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Naval combat</div><h3>Mk48.io</h3></div><span class="game-link">↗</span></div><p>Command naval vessels and survive torpedoes, rivals, and open-water combat.</p><div class="game-foot"><span>Softbear</span><span>mk48.io</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://netquel.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Space warfare</div><h3>Netquel</h3></div><span class="game-link">↗</span></div><p>Mine asteroids, build robotic spacecraft, and defend your growing space network.</p><div class="game-foot"><span>Softbear</span><span>netquel.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://tankgank.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Tank strategy</div><h3>Tankgank</h3></div><span class="game-link">↗</span></div><p>Fight for territory in multiplayer tank battles and develop the ground you control.</p><div class="game-foot"><span>Softbear</span><span>tankgank.com</span></div></a>
+      <a class="game-card reveal" href="https://turnfight.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Flight combat</div><h3>Turnfight</h3></div><span class="game-link">↗</span></div><p>Pilot an aircraft through competitive dogfights over clouds and ocean.</p><div class="game-foot"><span>Softbear</span><span>turnfight.com</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://voxmaxa.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Voxel combat</div><h3>Voxmaxa</h3></div><span class="game-link">↗</span></div><p>Duel with varied fighters and build block forts in a multiplayer voxel battlefield.</p><div class="game-foot"><span>Softbear</span><span>voxmaxa.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://marbrawl.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Marble matching / Beta</div><h3>Marbrawl</h3></div><span class="game-link">↗</span></div><p>Compete against other players to clear the board in multiplayer marble matching.</p><div class="game-foot"><span>Softbear</span><span>marbrawl.com</span></div></a>
+      <a class="game-card reveal" href="https://zentakil.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Undersea action / Beta</div><h3>Zentakil</h3></div><span class="game-link">↗</span></div><p>Navigate the depths as a hunter-killer jellyfish in a multiplayer undersea world.</p><div class="game-foot"><span>Softbear</span><span>zentakil.com</span></div></a>
+      <a class="game-card openfront reveal reveal-delay-1" href="https://openfront.io" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Massively multiplayer strategy</div><h3>OpenFront</h3></div><span class="game-link">↗</span></div><p>Expand territory, manage an economy, form alliances, and compete on large shared maps. OpenFront is independently developed and represented alongside the Softbear catalog through NRN.</p><div class="game-foot"><span>Independent / NRN covered</span><span>openfront.io</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section awards" id="awards">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal"><div class="kicker">03 — NRNA</div><h2>New Republic Network Awards.</h2></div>
+      <div class="section-copy reveal reveal-delay-1"><p class="lede">NRNA recognizes standout players, mods, and games through recurring community award cycles. Use the live forms below whenever nominations or voting are open.</p></div>
+    </div>
+
+    <div class="cycle reveal">
+      <div class="phase"><div class="phase-num">Month 01</div><h3>Nominations</h3><p>The community submits nominees for the current award cycle.</p></div>
+      <div class="phase"><div class="phase-num">Month 02</div><h3>Running</h3><p>Nominees are finalized and have time to build support before voting.</p></div>
+      <div class="phase"><div class="phase-num">Month 03</div><h3>Voting</h3><p>The community casts its votes and the cycle winners are determined.</p></div>
+    </div>
+
+    <div class="award-actions">
+      <a class="award-link reveal" href="https://forms.gle/TmmJMEPcY7DosMvB8" target="_blank" rel="noopener"><div><small>Submit</small><strong>Nominations</strong></div><span class="go">↗</span></a>
+      <a class="award-link reveal reveal-delay-1" href="https://forms.gle/MP9B57M82xgaL7oz9" target="_blank" rel="noopener"><div><small>Vote</small><strong>Quarterly Voting</strong></div><span class="go">↗</span></a>
+      <a class="award-link reveal reveal-delay-2" href="https://forms.gle/QszAhjD6wSB4z4b69" target="_blank" rel="noopener"><div><small>Vote</small><strong>Yearly Voting</strong></div><span class="go">↗</span></a>
+    </div>
+
+    <div class="calendar reveal">
+      <div class="kicker">Annual schedule</div>
+      <p class="muted">Three normal award cycles run through the first nine months. October through December are reserved for the Yearly awards.</p>
+      <div class="months">
+        <div class="month">JAN</div><div class="month run">FEB</div><div class="month vote">MAR</div>
+        <div class="month">APR</div><div class="month run">MAY</div><div class="month vote">JUN</div>
+        <div class="month">JUL</div><div class="month run">AUG</div><div class="month vote">SEP</div>
+        <div class="month yearly">OCT</div><div class="month yearly">NOV</div><div class="month yearly">DEC</div>
+      </div>
+    </div>
+
+    <div class="categories">
+      <article class="info-card reveal"><h3>Best Player</h3><p>Recognizes standout performance and community presence across NRN-covered games.</p></article>
+      <article class="info-card reveal reveal-delay-1"><h3>Best Mod</h3><p>Recognizes a community moderator whose work made a meaningful contribution.</p></article>
+      <article class="info-card reveal reveal-delay-2"><h3>Best Game</h3><p>Recognizes the strongest game represented by the network during the award period.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="news">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal"><div class="kicker">04 — NRNN</div><h2>The newsroom starts clean.</h2></div>
+      <div class="section-copy reveal reveal-delay-1"><p class="lede">NRNN is the New Republic Network News desk. Instead of displaying made-up placeholder headlines, this area stays empty until an actual article is ready to publish.</p></div>
+    </div>
+
+    <div class="newsroom-shell">
+      <div class="empty-news reveal">
+        <div><div class="empty-icon">N</div><h3>No articles published yet.</h3><p>When NRNN has real coverage, articles can be added here as cards with a headline, date, category, summary, and link or full story.</p></div>
+        <div class="catalog-label">NRNN / Awaiting first publication</div>
+      </div>
+      <aside class="news-guideline reveal reveal-delay-1">
+        <h3>Article format</h3>
+        <ol><li>Category or news desk</li><li>Publication date</li><li>Article headline</li><li>Short summary</li><li>Optional full-article link</li></ol>
+      </aside>
+    </div>
+    <!-- Future NRNN article cards can be inserted into this container. -->
+    <div class="article-grid" id="articleGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="staff">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal"><div class="kicker">05 — Staff</div><h2>The people behind NRN.</h2></div>
+      <div class="section-copy reveal reveal-delay-1"><p class="lede">NRN is currently managed by a one-person staff. As the network grows, this section can expand into a full team directory without changing the overall design.</p></div>
+    </div>
+
+    <div class="staff-layout">
+      <article class="staff-card reveal">
+        <div class="staff-avatar">M</div>
+        <h3>pNRE-Meh</h3>
+        <div class="staff-role">NRN Staff / Administration</div>
+        <p>Currently responsible for managing the New Republic Network and its connected projects, including NRN's direction, awards, news structure, and expansion.</p>
+      </article>
+      <div class="staff-intro reveal reveal-delay-1">
+        <p>NRN is being built as a network that can grow with its communities. The staff structure is intentionally simple right now: one person maintains the project while the systems, coverage, and game network continue to develop.</p>
+        <div class="note">Current staff count — 01</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="future">
+  <div class="wrap">
+    <div class="future-box reveal">
+      <div><div class="kicker">Looking Ahead</div><h3>NRN is designed for expansion.</h3><p>New games, future staff, additional projects, and new NRNN coverage can be added without rebuilding the identity of the site.</p></div>
+      <a href="#games" class="btn ghost">Explore games <span class="arrow">↑</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div><div class="footer-mark">NR<span>N</span></div><div style="margin-top:5px">New Republic Network · formerly Softbear Games Network</div></div>
+    <a href="#home" class="backtop">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+const loader=document.getElementById('loader');
+window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),350));
+setTimeout(()=>loader.classList.add('done'),1800);
+
+const topbar=document.getElementById('topbar');
+const navlinks=document.getElementById('navlinks');
+const menuBtn=document.getElementById('menuBtn');
+const navAnchors=[...navlinks.querySelectorAll('a')];
+
+function onScroll(){
+  topbar.classList.toggle('scrolled',window.scrollY>24);
+  const sections=[...document.querySelectorAll('main section[id]')];
+  let current='';
+  sections.forEach(section=>{if(window.scrollY>=section.offsetTop-180)current=section.id});
+  navAnchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+menuBtn.addEventListener('click',()=>{
+  const open=navlinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(open));
+});
+navAnchors.forEach(a=>a.addEventListener('click',()=>{navlinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}));
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})
+},{threshold:.12,rootMargin:'0px 0px -35px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+const spotlight=document.getElementById('spotlight');
+window.addEventListener('pointermove',e=>{
+  spotlight.style.transform=`translate(${e.clientX-180}px,${e.clientY-180}px)`;
+},{passive:true});
+
+// Subtle interactive tilt inspired by modern product/brand sites.
+if(window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.game-card,.structure-card,.award-link').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(800px) rotateX(${(-y*2.2).toFixed(2)}deg) rotateY(${(x*2.2).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener('pointerleave',()=>card.style.transform='');
+  });
+}
+</script>
+</body>
+</html>
