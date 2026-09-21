@@ -197,6 +197,17 @@ p{margin:0}
 .month.yearly{background:rgba(214,90,82,.045)}
 .categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}.info-card{padding:24px}.info-card p{color:var(--muted);font-size:14px;margin-top:9px}
 
+/* ---------- RESOURCE HUB ---------- */
+.resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px}
+.resource-card{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;min-height:205px;transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.resource-card:hover{transform:translateY(-4px);border-color:#465463;background:var(--panel-2)}
+.resource-card .resource-tag{font:500 10px 'IBM Plex Mono';letter-spacing:.09em;text-transform:uppercase;color:var(--gold)}
+.resource-card h3{margin-top:13px;font-size:31px}.resource-card p{color:var(--muted);font-size:14px;margin:9px 0 20px}
+.resource-card .btn{margin-top:auto;align-self:flex-start}
+.link-note{margin-top:18px;color:var(--faint);font:500 11px 'IBM Plex Mono';letter-spacing:.04em}
+@media(max-width:980px){.resource-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.resource-grid{grid-template-columns:1fr}.resource-card{min-height:0}}
+
 /* ---------- NRNN ---------- */
 .newsroom-shell{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:38px}
 .empty-news{padding:38px;min-height:310px;display:flex;flex-direction:column;justify-content:space-between}
@@ -258,9 +269,9 @@ body:hover .spotlight{opacity:1}
       <div class="brand-copy">NEW REPUBLIC NETWORK<br><span>formerly SGN</span></div>
     </a>
     <nav class="navlinks" id="navlinks" aria-label="Primary navigation">
-      <a href="#about">About</a><a href="#games">Games</a><a href="#awards">NRNA</a><a href="#news">NRNN</a><a href="#staff">Staff</a>
+      <a href="#about">About</a><a href="#games">Games</a><a href="#awards">NRNA</a><a href="#resources">Links</a><a href="#news">NRNN</a><a href="#staff">Staff</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks"><span aria-hidden="true">☰</span> Menu</button>
   </div>
 </header>
 
@@ -278,6 +289,7 @@ body:hover .spotlight{opacity:1}
     <div class="actions">
       <a class="btn primary" href="#games">Explore the network <span class="arrow">→</span></a>
       <a class="btn ghost" href="#awards">NRNA awards <span class="arrow">↘</span></a>
+      <a class="btn ghost" href="#resources">All links <span class="arrow">↘</span></a>
     </div>
     <div class="hero-meta"><span><i></i> Formerly SGN</span><span><i></i> Softbear + OpenFront</span><span><i></i> Awards + News + Community</span></div>
   </div>
@@ -310,17 +322,17 @@ body:hover .spotlight{opacity:1}
       <div class="catalog-label">10 Softbear titles + OpenFront</div>
     </div>
     <div class="game-grid">
-      <a class="game-card reveal" href="https://kiomet.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Real-time strategy</div><h3>Kiomet</h3></div><span class="game-link">↗</span></div><p>Command forces, build supply lines, and expand through a competitive multiplayer map.</p><div class="game-foot"><span>Softbear</span><span>kiomet.com</span></div></a>
-      <a class="game-card reveal reveal-delay-1" href="https://krakax.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Archery / Physics</div><h3>Krakax</h3></div><span class="game-link">↗</span></div><p>A surreal multiplayer archery game built around unusual gravity and physics.</p><div class="game-foot"><span>Softbear</span><span>krakax.com</span></div></a>
-      <a class="game-card reveal reveal-delay-2" href="https://mazean.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">3D FPS</div><h3>Mazean</h3></div><span class="game-link">↗</span></div><p>Fight with lasers and force fields in a fast multiplayer first-person arena.</p><div class="game-foot"><span>Softbear</span><span>mazean.com</span></div></a>
-      <a class="game-card reveal" href="https://mk48.io" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Naval combat</div><h3>Mk48.io</h3></div><span class="game-link">↗</span></div><p>Command naval vessels and survive torpedoes, rivals, and open-water combat.</p><div class="game-foot"><span>Softbear</span><span>mk48.io</span></div></a>
-      <a class="game-card reveal reveal-delay-1" href="https://netquel.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Space warfare</div><h3>Netquel</h3></div><span class="game-link">↗</span></div><p>Mine asteroids, build robotic spacecraft, and defend your growing space network.</p><div class="game-foot"><span>Softbear</span><span>netquel.com</span></div></a>
-      <a class="game-card reveal reveal-delay-2" href="https://tankgank.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Tank strategy</div><h3>Tankgank</h3></div><span class="game-link">↗</span></div><p>Fight for territory in multiplayer tank battles and develop the ground you control.</p><div class="game-foot"><span>Softbear</span><span>tankgank.com</span></div></a>
-      <a class="game-card reveal" href="https://turnfight.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Flight combat</div><h3>Turnfight</h3></div><span class="game-link">↗</span></div><p>Pilot an aircraft through competitive dogfights over clouds and ocean.</p><div class="game-foot"><span>Softbear</span><span>turnfight.com</span></div></a>
-      <a class="game-card reveal reveal-delay-1" href="https://voxmaxa.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Voxel combat</div><h3>Voxmaxa</h3></div><span class="game-link">↗</span></div><p>Duel with varied fighters and build block forts in a multiplayer voxel battlefield.</p><div class="game-foot"><span>Softbear</span><span>voxmaxa.com</span></div></a>
-      <a class="game-card reveal reveal-delay-2" href="https://marbrawl.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Marble matching / Beta</div><h3>Marbrawl</h3></div><span class="game-link">↗</span></div><p>Compete against other players to clear the board in multiplayer marble matching.</p><div class="game-foot"><span>Softbear</span><span>marbrawl.com</span></div></a>
-      <a class="game-card reveal" href="https://zentakil.com" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Undersea action / Beta</div><h3>Zentakil</h3></div><span class="game-link">↗</span></div><p>Navigate the depths as a hunter-killer jellyfish in a multiplayer undersea world.</p><div class="game-foot"><span>Softbear</span><span>zentakil.com</span></div></a>
-      <a class="game-card openfront reveal reveal-delay-1" href="https://openfront.io" target="_blank" rel="noopener"><div class="game-top"><div><div class="genre">Massively multiplayer strategy</div><h3>OpenFront</h3></div><span class="game-link">↗</span></div><p>Expand territory, manage an economy, form alliances, and compete on large shared maps. OpenFront is independently developed and represented alongside the Softbear catalog through NRN.</p><div class="game-foot"><span>Independent / NRN covered</span><span>openfront.io</span></div></a>
+      <a class="game-card reveal" href="https://kiomet.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Real-time strategy</div><h3>Kiomet</h3></div><span class="game-link">↗</span></div><p>Command forces, build supply lines, and expand through a competitive multiplayer map.</p><div class="game-foot"><span>Softbear</span><span>kiomet.com</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://krakax.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Archery / Physics</div><h3>Krakax</h3></div><span class="game-link">↗</span></div><p>A surreal multiplayer archery game built around unusual gravity and physics.</p><div class="game-foot"><span>Softbear</span><span>krakax.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://mazean.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">3D FPS</div><h3>Mazean</h3></div><span class="game-link">↗</span></div><p>Fight with lasers and force fields in a fast multiplayer first-person arena.</p><div class="game-foot"><span>Softbear</span><span>mazean.com</span></div></a>
+      <a class="game-card reveal" href="https://mk48.io" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Naval combat</div><h3>Mk48.io</h3></div><span class="game-link">↗</span></div><p>Command naval vessels and survive torpedoes, rivals, and open-water combat.</p><div class="game-foot"><span>Softbear</span><span>mk48.io</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://netquel.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Space warfare</div><h3>Netquel</h3></div><span class="game-link">↗</span></div><p>Mine asteroids, build robotic spacecraft, and defend your growing space network.</p><div class="game-foot"><span>Softbear</span><span>netquel.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://tankgank.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Tank strategy</div><h3>Tankgank</h3></div><span class="game-link">↗</span></div><p>Fight for territory in multiplayer tank battles and develop the ground you control.</p><div class="game-foot"><span>Softbear</span><span>tankgank.com</span></div></a>
+      <a class="game-card reveal" href="https://turnfight.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Flight combat</div><h3>Turnfight</h3></div><span class="game-link">↗</span></div><p>Pilot an aircraft through competitive dogfights over clouds and ocean.</p><div class="game-foot"><span>Softbear</span><span>turnfight.com</span></div></a>
+      <a class="game-card reveal reveal-delay-1" href="https://voxmaxa.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Voxel combat</div><h3>Voxmaxa</h3></div><span class="game-link">↗</span></div><p>Duel with varied fighters and build block forts in a multiplayer voxel battlefield.</p><div class="game-foot"><span>Softbear</span><span>voxmaxa.com</span></div></a>
+      <a class="game-card reveal reveal-delay-2" href="https://marbrawl.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Marble matching / Beta</div><h3>Marbrawl</h3></div><span class="game-link">↗</span></div><p>Compete against other players to clear the board in multiplayer marble matching.</p><div class="game-foot"><span>Softbear</span><span>marbrawl.com</span></div></a>
+      <a class="game-card reveal" href="https://zentakil.com" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Undersea action / Beta</div><h3>Zentakil</h3></div><span class="game-link">↗</span></div><p>Navigate the depths as a hunter-killer jellyfish in a multiplayer undersea world.</p><div class="game-foot"><span>Softbear</span><span>zentakil.com</span></div></a>
+      <a class="game-card openfront reveal reveal-delay-1" href="https://openfront.io" target="_blank" rel="noopener noreferrer"><div class="game-top"><div><div class="genre">Massively multiplayer strategy</div><h3>OpenFront</h3></div><span class="game-link">↗</span></div><p>Expand territory, manage an economy, form alliances, and compete on large shared maps. OpenFront is independently developed and represented alongside the Softbear catalog through NRN.</p><div class="game-foot"><span>Independent / NRN covered</span><span>openfront.io</span></div></a>
     </div>
   </div>
 </section>
@@ -339,9 +351,9 @@ body:hover .spotlight{opacity:1}
     </div>
 
     <div class="award-actions">
-      <a class="award-link reveal" href="https://forms.gle/TmmJMEPcY7DosMvB8" target="_blank" rel="noopener"><div><small>Submit</small><strong>Nominations</strong></div><span class="go">↗</span></a>
-      <a class="award-link reveal reveal-delay-1" href="https://forms.gle/MP9B57M82xgaL7oz9" target="_blank" rel="noopener"><div><small>Vote</small><strong>Quarterly Voting</strong></div><span class="go">↗</span></a>
-      <a class="award-link reveal reveal-delay-2" href="https://forms.gle/QszAhjD6wSB4z4b69" target="_blank" rel="noopener"><div><small>Vote</small><strong>Yearly Voting</strong></div><span class="go">↗</span></a>
+      <a class="award-link reveal" href="https://forms.gle/TmmJMEPcY7DosMvB8" target="_blank" rel="noopener noreferrer"><div><small>Submit</small><strong>Nominations</strong></div><span class="go">↗</span></a>
+      <a class="award-link reveal reveal-delay-1" href="https://forms.gle/MP9B57M82xgaL7oz9" target="_blank" rel="noopener noreferrer"><div><small>Vote</small><strong>Quarterly Voting</strong></div><span class="go">↗</span></a>
+      <a class="award-link reveal reveal-delay-2" href="https://forms.gle/QszAhjD6wSB4z4b69" target="_blank" rel="noopener noreferrer"><div><small>Vote</small><strong>Yearly Voting</strong></div><span class="go">↗</span></a>
     </div>
 
     <div class="calendar reveal">
@@ -363,10 +375,28 @@ body:hover .spotlight{opacity:1}
   </div>
 </section>
 
+<section class="section section-tight" id="resources">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal"><div class="kicker">04 — Link Hub</div><h2>Everything in one place.</h2></div>
+      <div class="section-copy reveal reveal-delay-1"><p class="lede">Use this hub for the network's main public links. Every button opens the actual destination in a new tab, so members do not need to hunt through announcements for forms or games.</p></div>
+    </div>
+    <div class="resource-grid">
+      <article class="resource-card reveal"><div class="resource-tag">NRNA / Submit</div><h3>Nominations</h3><p>Submit nominations for the current New Republic Network Awards cycle.</p><a class="btn primary" href="https://forms.gle/TmmJMEPcY7DosMvB8" target="_blank" rel="noopener noreferrer">Open nominations <span class="arrow">↗</span></a></article>
+      <article class="resource-card reveal reveal-delay-1"><div class="resource-tag">NRNA / Vote</div><h3>Quarterly Voting</h3><p>Cast votes during an active quarterly NRNA voting window.</p><a class="btn primary" href="https://forms.gle/MP9B57M82xgaL7oz9" target="_blank" rel="noopener noreferrer">Quarterly ballot <span class="arrow">↗</span></a></article>
+      <article class="resource-card reveal reveal-delay-2"><div class="resource-tag">NRNA / Vote</div><h3>Yearly Voting</h3><p>Open the yearly NRNA ballot when the annual voting period is active.</p><a class="btn primary" href="https://forms.gle/QszAhjD6wSB4z4b69" target="_blank" rel="noopener noreferrer">Yearly ballot <span class="arrow">↗</span></a></article>
+      <article class="resource-card reveal"><div class="resource-tag">Network / Strategy</div><h3>Kiomet</h3><p>Open Kiomet directly from NRN.</p><a class="btn ghost" href="https://kiomet.com" target="_blank" rel="noopener noreferrer">Play Kiomet <span class="arrow">↗</span></a></article>
+      <article class="resource-card reveal reveal-delay-1"><div class="resource-tag">Network / Strategy</div><h3>OpenFront</h3><p>Open OpenFront directly from NRN.</p><a class="btn ghost" href="https://openfront.io" target="_blank" rel="noopener noreferrer">Play OpenFront <span class="arrow">↗</span></a></article>
+      <article class="resource-card reveal reveal-delay-2"><div class="resource-tag">Directory</div><h3>All Network Games</h3><p>Jump to the complete NRN game directory for every currently listed title.</p><a class="btn ghost" href="#games">View directory <span class="arrow">↓</span></a></article>
+    </div>
+    <div class="link-note reveal">NRN only lists destinations that have been provided for the network; no placeholder external links are used.</div>
+  </div>
+</section>
+
 <section class="section" id="news">
   <div class="wrap">
     <div class="split">
-      <div class="reveal"><div class="kicker">04 — NRNN</div><h2>The newsroom starts clean.</h2></div>
+      <div class="reveal"><div class="kicker">05 — NRNN</div><h2>The newsroom starts clean.</h2></div>
       <div class="section-copy reveal reveal-delay-1"><p class="lede">NRNN is the New Republic Network News desk. Instead of displaying made-up placeholder headlines, this area stays empty until an actual article is ready to publish.</p></div>
     </div>
 
@@ -388,7 +418,7 @@ body:hover .spotlight{opacity:1}
 <section class="section" id="staff">
   <div class="wrap">
     <div class="split">
-      <div class="reveal"><div class="kicker">05 — Staff</div><h2>The people behind NRN.</h2></div>
+      <div class="reveal"><div class="kicker">06 — Staff</div><h2>The people behind NRN.</h2></div>
       <div class="section-copy reveal reveal-delay-1"><p class="lede">NRN is currently managed by a one-person staff. As the network grows, this section can expand into a full team directory without changing the overall design.</p></div>
     </div>
 
@@ -458,6 +488,15 @@ document.addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
   navlinks.classList.remove('open');
   menuBtn.setAttribute('aria-expanded','false');
+});
+
+// Prevent accidental placeholder links from behaving like real destinations.
+document.querySelectorAll('a[href]').forEach(link=>{
+  const href=link.getAttribute('href');
+  if(!href||href==='#'){
+    link.setAttribute('aria-disabled','true');
+    link.addEventListener('click',e=>e.preventDefault());
+  }
 });
 
 // Replay reveal animations whenever an element re-enters the viewport.
