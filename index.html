@@ -10,6 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Accessible keyboard entry and focus without changing the visual design */
+.skip-link{position:fixed;left:16px;top:-120px;z-index:10000;padding:12px 18px;background:#f0ecdd;color:#090d12;font-weight:800;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.skip-link:focus{top:12px}
+:where(a,button,[role="button"]):focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
 :root{
   --bg:#090d12;
   --bg-2:#0d131a;
@@ -271,6 +276,7 @@ body:hover .spotlight{opacity:1}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="loader" id="loader" aria-hidden="true"><div><div class="loader-mark">NR<span>N</span></div><div class="loader-line"></div></div></div>
 <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
@@ -287,7 +293,7 @@ body:hover .spotlight{opacity:1}
   </div>
 </header>
 
-<main>
+<main id="main-content">
 <section class="hero" id="home">
   <div class="hero-grid"></div><div class="hero-orb one"></div><div class="hero-orb two"></div>
   <div class="wrap hero-inner">
